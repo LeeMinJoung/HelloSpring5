@@ -1,38 +1,30 @@
 package hello.spring.basic;
 
-import hello.spring.bean.Spring5Bean03;
-import hello.spring.bean.Spring5Bean03Eng;
-import hello.spring.bean.Spring5Bean03Jpn;
-import hello.spring.bean.Spring5Bean03Kor;
+import hello.spring.bean.*;
 
 public class Spring5App04 {
-    // 네번째 사례
-    // 인터페이스를 도입하면
-    // 확장성이 높고 유연한 코드를 작성할 수 있음
-    // 또한, 객체간의 tightly coupled를 피할 수 있고
-    // 객체간의 의존성을 낮출수도 있음
+    // 다섯번째 사례
+    // 인사말을 한국어, 영어, 일본어로 출력하도록 기능 추가
 
-    // 하지만, new 연산자로 객체를 생성하는 코드가 노출됨
-    // 다시 말해, Spring5Bean03은
-    // Spring5Bean03Kor, Spring5Bean03Eng,
-    // Spring5Bean03Jpn에 의존적이라는 의미
+    // 문자열을 통해 생성해야 할 객체를 취사선택하게 됨
+    // 개발자가 신경써야 할 부분이 늘어났다는 단점 발생
+    // 즉, 비지니스 코드 작성하는 것도 버거운데
+    // 객체 생성관련 클래스를 따로 작성하는 것은 더욱 힘듦
 
-    // 해결 : factory 패턴을 이용해서
-    // 객체생성을 전담하는 클래스를 만들어
-    // 객체생성 과정을 캡슐화 함
+    // 해결 : 객체 생성부분은 외부의 힘을 빌림
+    // 즉, 스프링의 IoC 컨테이너가 객체를 생성해주고
+    // 그것을 주입받음
 
     public static void main(String[] args) {
-        // 인터페이스는 불완전 클래스이기 때문에
-        // 객체화 불가
-        Spring5Bean03 app03 = null;
+        Spring5Bean03 app04 = null;
 
-        app03 = new Spring5Bean03Kor();
-        app03.sayHello("스프링5!!");
+        app04 = Spring5Bean04Factory.create("kor");
+        app04.sayHello("스프링5!!");
 
-        app03 = new Spring5Bean03Eng();
-        app03.sayHello("Spring5!!");
+        app04 = Spring5Bean04Factory.create("eng");
+        app04.sayHello("Spring5!!");
 
-        app03 = new Spring5Bean03Jpn();
-        app03.sayHello("スプリング5!!");
+        app04 = Spring5Bean04Factory.create("jnp");
+        app04.sayHello("スプリング5!!");
     }
 }
